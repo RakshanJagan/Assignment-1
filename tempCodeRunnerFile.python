@@ -1,0 +1,21 @@
+import numpy as np
+from keras.models import load_model
+
+# Load your Keras model
+model_path = "D:\MCW\Assignment-1\DATA_AUG.keras"
+model = load_model(model_path)
+
+# Specify the output binary file
+output_bin_path = "D:\MCW\Assignment-1\DATA_AUG_BIN.bin"
+
+# Open the binary file for writing
+with open(output_bin_path, "wb") as bin_file:
+    for layer in model.layers:
+        # Get the weights and biases for the layer
+        weights = layer.get_weights()
+        for weight in weights:
+            # Convert to numpy array and save to binary file
+            weight_array = np.array(weight)
+            weight_array.tofile(bin_file)
+
+print(f"Model weights saved to {output_bin_path}")
